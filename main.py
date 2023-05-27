@@ -18,7 +18,6 @@ iPlanetDirectoryPro = input('请输入iPlanetDirectoryPro：')
 delay_time = int(input('请输入完成一门课评价后的延时（单位：秒）：') or '10')
 # score = float(input('请输入每门课程评价的总分（满分100分）：') or '100.0')
 score = 100.0
-
 data = {}
 
 status = 403

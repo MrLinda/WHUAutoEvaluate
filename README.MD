@@ -26,6 +26,6 @@
 
 ### 正式版
 
-依次填入Cookie即可
+按提示填入Cookie即可
 
 [下载](https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.1/WHUAutoEvaluate.exe)
