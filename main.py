@@ -37,7 +37,10 @@ while status == 403:
         insert_cookie = input('请输入insert_cookie：')
         iPlanetDirectoryPro = input('请输入iPlanetDirectoryPro：')
 
-
+headers = {
+        'content-type': 'application/json',
+        'cookie': cookie
+    }
 host = 'https://ugsqs.whu.edu.cn/getxnxqList'
 receive = requests.post(host, headers=headers, data=data)
 info = json.loads(receive.text)
