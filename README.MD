@@ -28,4 +28,4 @@
 
 依次填入Cookie即可
 
-<a herf="https://ugsqs.whu.edu.cn/new/student/">下载</a>
+<a herf="https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.0/WHUAutoEvaluate.exe">下载</a>
