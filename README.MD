@@ -10,7 +10,7 @@
 
 ## 使用方法
 
-打开<a herf="https://ugsqs.whu.edu.cn/new/student/">评教系统</a>
+打开[评教系统](https://ugsqs.whu.edu.cn/new/student/)
 
 按下`F12`打开开发者工具
 
@@ -28,4 +28,4 @@
 
 依次填入Cookie即可
 
-<a herf="https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.0/WHUAutoEvaluate.exe">下载</a>
+[下载](https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.0/WHUAutoEvaluate.exe)
