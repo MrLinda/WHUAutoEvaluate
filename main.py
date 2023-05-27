@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 # Cookie
 # JSESSIONID = ''
@@ -134,3 +135,5 @@ for task in info:
             print('已进行过评教，跳过！')
             time.sleep(0.1)
     print('评教完成！')
+
+os.system("pause")

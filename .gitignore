@@ -1,2 +1,5 @@
 /FiddlerRoot.cer
 /.idea/
+/main.spec
+/dist/
+/build/
