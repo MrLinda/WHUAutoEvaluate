@@ -28,4 +28,4 @@
 
 依次填入Cookie即可
 
-[下载](https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.0/WHUAutoEvaluate.exe)
+[下载](https://github.com/MrLinda/WHUAutoEvaluate/releases/download/V1.0.1/WHUAutoEvaluate.exe)
