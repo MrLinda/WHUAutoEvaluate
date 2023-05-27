@@ -23,3 +23,9 @@
 将下面的`Cookie Value`填入程序里即可
 
 ![](./Code.png)
+
+### 正式版
+
+依次填入Cookie即可
+
+<a herf="https://ugsqs.whu.edu.cn/new/student/">下载</a>
