@@ -1,5 +1,7 @@
 # 武汉大学自动评教
 
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MrLinda/WHUAutoEvaluate/total)
+
 ## 介绍
 
 同学们在考试过后需要在评价系统中评教后才能查询成绩，往往大多数人都厌烦这种~~形式主义的~~行为，于是我就做了这个脚本，帮助大家快速评教
