@@ -3,6 +3,7 @@ import json
 import time
 import os
 import configparser
+import threading
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -16,7 +17,7 @@ xqid = ''
 xsxh = ''
 
 
-def button_check_callback():
+def query():
     course_table.delete(*course_table.get_children())
     JSESSIONID = input_jsessionID.get()
     insert_cookie = input_cookie.get()
@@ -149,7 +150,7 @@ def auto_evaluate():
                         wdvalue.append(('wdvalue', 0))
                     elif i['zbtx'] == '单选题':
                         dxid.append(('dxid', i['id']))
-                        dxvalue.append(('dxvalue', int(i['zbfz']) * score_index / 100))
+                        dxvalue.append(('dxvalue', int(i['zbfz']) * int(score_index) / 100))
                         # i['id']
                         # i['xxList']['zbxxfz']
                 data = dxid + dxvalue + sfjft + wdid + wdvalue
@@ -173,7 +174,7 @@ def auto_evaluate():
             evaluate_progress.step(1)
             window.update()
         messagebox.showinfo('完成', '评教已完成！')
-        button_check_callback()
+        query()
     else:
         messagebox.showerror('错误', '请先获取数据！')
 
@@ -245,85 +246,106 @@ def change_evaluate():
         messagebox.showerror('错误', '请先获取数据！')
 
 
-window = tk.Tk()
-window.title('WHU自动评教')
-window_width = 800
-window_height = 600
-window.geometry('%dx%d+%d+%d' % (window_width, window_height,
-                                 (window.winfo_screenwidth() - window_width) / 2,
-                                 (window.winfo_screenheight() - window_height) / 2))
+def new_thread(target):
+    if threading.active_count() == 1:
+        add_thread = threading.Thread(target=target)
+        add_thread.start()
+    else:
+        messagebox.showerror('错误', '请先等待当前任务完成！')
 
-label_jsessionID = tk.Label(window, text='JSEESIONID:', width=24)
-label_jsessionID.grid(row=0, column=0)
-input_jsessionID = tk.Entry(window, width=60)
-input_jsessionID.grid(row=0, column=1)
 
-label_cookie = tk.Label(window, text='insert_cookie:')
-label_cookie.grid(row=1, column=0)
-input_cookie = tk.Entry(window, width=60)
-input_cookie.grid(row=1, column=1)
+def query_button_callback():
+    new_thread(query)
 
-label_iPlanetDirectoryPro = tk.Label(window, text='iPlanetDirectoryPro:')
-label_iPlanetDirectoryPro.grid(row=2, column=0)
-input_iPlanetDirectoryPro = tk.Entry(window, width=60)
-input_iPlanetDirectoryPro.grid(row=2, column=1)
 
-button_check = tk.Button(window, text='查询', width=20, height=3, command=button_check_callback)
-button_check.grid(row=0, column=2, rowspan=3, padx=30, columnspan=2)
+def auto_evaluate_button_callback():
+    new_thread(auto_evaluate)
 
-course_table = ttk.Treeview(window, height=24, selectmode='browse')
-course_table.grid(row=3, column=0, columnspan=2, rowspan=24)
-course_table["columns"] = ("Course", "Teacher", "State")
-course_table.heading("#0", text="序号")
-course_table.column("#0", width=60)
-course_table.heading("Course", text="课程")
-course_table.column("Course", width=280)
-course_table.heading("Teacher", text="教师")
-course_table.column("Teacher", width=160)
-course_table.heading("State", text="状态")
-course_table.column("State", width=80)
 
-label_level = tk.Label(window, text='得分百分比:')
-label_level.grid(row=9, column=2)
-input_level = tk.Spinbox(window, from_=0, to=100, increment=20, width=12)
-input_level.grid(row=9, column=3)
+def change_evaluate_button_callback():
+    new_thread(change_evaluate)
 
-label_delay = tk.Label(window, text='每门课程完成时间（秒）:')
-label_delay.grid(row=10, column=2, columnspan=2)
-input_delay = tk.Entry(window, width=5)
-input_delay.insert(0, 10)
-input_delay.grid(row=11, column=3)
 
-button_auto = tk.Button(window, text='自动评教', width=20, height=3, command=auto_evaluate)
-button_auto.grid(row=12, column=2, rowspan=3, padx=30, columnspan=2)
+if __name__ =='__main__':
+    window = tk.Tk()
+    window.title('WHU自动评教')
+    window_width = 800
+    window_height = 600
+    window.geometry('%dx%d+%d+%d' % (window_width, window_height,
+                                     (window.winfo_screenwidth() - window_width) / 2,
+                                     (window.winfo_screenheight() - window_height) / 2))
 
-evaluate_progress = ttk.Progressbar(window, length=180)
-evaluate_progress.grid(row=15, column=2, columnspan=2)
-evaluate_progress['maximum'] = 100
+    label_jsessionID = tk.Label(window, text='JSEESIONID:', width=24)
+    label_jsessionID.grid(row=0, column=0)
+    input_jsessionID = tk.Entry(window, width=60)
+    input_jsessionID.grid(row=0, column=1)
 
-label_level2 = tk.Label(window, text='得分百分比:')
-label_level2.grid(row=22, column=2)
-input_level2 = tk.Spinbox(window, value=(20, 40, 60, 80, 100), width=12)
-input_level2.grid(row=22, column=3)
+    label_cookie = tk.Label(window, text='insert_cookie:')
+    label_cookie.grid(row=1, column=0)
+    input_cookie = tk.Entry(window, width=60)
+    input_cookie.grid(row=1, column=1)
 
-button_auto = tk.Button(window, text='修改评价', width=20, height=3, command=change_evaluate)
-button_auto.grid(row=24, column=2, rowspan=3, padx=30, columnspan=2)
+    label_iPlanetDirectoryPro = tk.Label(window, text='iPlanetDirectoryPro:')
+    label_iPlanetDirectoryPro.grid(row=2, column=0)
+    input_iPlanetDirectoryPro = tk.Entry(window, width=60)
+    input_iPlanetDirectoryPro.grid(row=2, column=1)
 
-conf = configparser.ConfigParser()
-config_path = './config.ini'
-if os.path.exists(config_path):
-    conf.read(config_path, encoding='utf-8')
-    input_jsessionID.insert(0, conf['settings']['JSESSIONID'])
-    input_cookie.insert(0, conf['settings']['insert_cookie'])
-    input_iPlanetDirectoryPro.insert(0, conf['settings']['iPlanetDirectoryPro'])
-else:
-    conf.add_section('settings')
-    conf.add_section('WARNING')
-    conf.set('WARNING', 'WARNING', 'Don\'t disclose the contents of this document!')
-    conf.set('settings', 'JSESSIONID', '')
-    conf.set('settings', 'insert_cookie', '')
-    conf.set('settings', 'iPlanetDirectoryPro', '')
-    conf.write(open(config_path, 'w'))
+    button_check = tk.Button(window, text='查询', width=20, height=3, command=query_button_callback)
+    button_check.grid(row=0, column=2, rowspan=3, padx=30, columnspan=2)
 
-window.resizable(width=False, height=False)
-window.mainloop()
+    course_table = ttk.Treeview(window, height=24, selectmode='browse')
+    course_table.grid(row=3, column=0, columnspan=2, rowspan=24)
+    course_table["columns"] = ("Course", "Teacher", "State")
+    course_table.heading("#0", text="序号")
+    course_table.column("#0", width=60)
+    course_table.heading("Course", text="课程")
+    course_table.column("Course", width=280)
+    course_table.heading("Teacher", text="教师")
+    course_table.column("Teacher", width=160)
+    course_table.heading("State", text="状态")
+    course_table.column("State", width=80)
+
+    label_level = tk.Label(window, text='得分百分比:')
+    label_level.grid(row=9, column=2)
+    input_level = tk.Spinbox(window, from_=0, to=100, increment=20, width=12)
+    input_level.grid(row=9, column=3)
+
+    label_delay = tk.Label(window, text='每门课程完成时间（秒）:')
+    label_delay.grid(row=10, column=2, columnspan=2)
+    input_delay = tk.Entry(window, width=5)
+    input_delay.insert(0, 10)
+    input_delay.grid(row=11, column=3)
+
+    button_auto = tk.Button(window, text='自动评教', width=20, height=3, command=auto_evaluate_button_callback)
+    button_auto.grid(row=12, column=2, rowspan=3, padx=30, columnspan=2)
+
+    evaluate_progress = ttk.Progressbar(window, length=180)
+    evaluate_progress.grid(row=15, column=2, columnspan=2)
+    evaluate_progress['maximum'] = 100
+
+    label_level2 = tk.Label(window, text='得分百分比:')
+    label_level2.grid(row=22, column=2)
+    input_level2 = tk.Spinbox(window, value=(20, 40, 60, 80, 100), width=12)
+    input_level2.grid(row=22, column=3)
+
+    button_auto = tk.Button(window, text='修改评价', width=20, height=3, command=change_evaluate_button_callback)
+    button_auto.grid(row=24, column=2, rowspan=3, padx=30, columnspan=2)
+
+    conf = configparser.ConfigParser()
+    config_path = './config.ini'
+    if os.path.exists(config_path):
+        conf.read(config_path, encoding='utf-8')
+        input_jsessionID.insert(0, conf['settings']['JSESSIONID'])
+        input_cookie.insert(0, conf['settings']['insert_cookie'])
+        input_iPlanetDirectoryPro.insert(0, conf['settings']['iPlanetDirectoryPro'])
+    else:
+        conf.add_section('settings')
+        conf.add_section('WARNING')
+        conf.set('WARNING', 'WARNING', 'Don\'t disclose the contents of this document!')
+        conf.set('settings', 'JSESSIONID', '')
+        conf.set('settings', 'insert_cookie', '')
+        conf.set('settings', 'iPlanetDirectoryPro', '')
+        conf.write(open(config_path, 'w'))
+
+    window.resizable(width=False, height=False)
+    window.mainloop()
