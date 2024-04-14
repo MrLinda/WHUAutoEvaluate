@@ -2,6 +2,7 @@
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MrLinda/WHUAutoEvaluate/total)
 
+
 ## 介绍
 
 同学们在考试过后需要在评价系统中评教后才能查询成绩，往往大多数人都厌烦这种~~形式主义的~~行为，于是我就做了这个脚本，帮助大家快速评教
@@ -17,8 +18,29 @@
 ## 环境
 
 > python
+> 
+> requests
+> 
+> selenium
 
 ## 使用方法
+
+### 下载
+
+[进入下载页面](https://github.com/MrLinda/WHUAutoEvaluate/releases)
+
+### 船新版本
+
+1. 打开软件
+2. 点击获取按钮
+3. 在弹出的Edge窗口中登录
+4. 等待片刻即可获取到教务系统cookie
+5. 点击查询，会将本次需要评教的课程显示出来
+6. 在得分百分比处填写需要给课程评的分数、在每门课程完成时间填写一门课评价完之后等待的时间
+7. 点击自动评教，等待完成
+8. 如果需要修改评分，可以在左侧列表中选中课程后使用软件右下区域修改评分
+
+### 老版本
 
 打开[评教系统](https://ugsqs.whu.edu.cn/new/student/)
 
@@ -40,9 +62,4 @@ Edge:
 
 ![](./images/EXE.png)
 
-### 正式版
-
-按提示填入Cookie即可
-
-[下载](https://github.com/MrLinda/WHUAutoEvaluate/releases)
 
