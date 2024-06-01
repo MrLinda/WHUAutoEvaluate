@@ -40,26 +40,5 @@
 7. 点击自动评教，等待完成
 8. 如果需要修改评分，可以在左侧列表中选中课程后使用软件右下区域修改评分
 
-### 老版本
-
-打开[评教系统](https://ugsqs.whu.edu.cn/new/student/)
-
-按下`F12`打开开发者工具
-
-Chrome：
-
-![](./images/F12.png)
-
-Edge:
-
-![](./images/Edge.png)
-
-选中cookie的项目
-
-![](./images/选中.png)
-
-将下面的`Cookie Value`填入程序里即可
-
-![](./images/EXE.png)
 
 
