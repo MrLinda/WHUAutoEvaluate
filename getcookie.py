@@ -25,25 +25,29 @@ def check_cookie(cookies):
 
 class GetCookie:
     def __init__(self):
-        ser = Service()
-        if not os.path.exists("./edgedriver_win64/msedgedriver.exe"):
+        try:
+            browser = webdriver.Edge()
+        except:
             dd.download_driver()
-        ser.path = './edgedriver_win64/msedgedriver.exe'
-        browser = webdriver.Edge(service=ser)
-        url = 'https://ugsqs.whu.edu.cn/new/student/'
+            browser = webdriver.Edge()
+        finally:
+            # ser = Service()
+            # if not os.path.exists("./edgedriver_win64/msedgedriver.exe"):
+            #     dd.download_driver()
+            # ser.path = './edgedriver_win64/msedgedriver.exe'
+            url = 'https://ugsqs.whu.edu.cn/new/student/'
+            browser.get(url)
+            cookies = browser.get_cookies()
 
-        browser.get(url)
-        cookies = browser.get_cookies()
+            # print(browser.current_url.split('/')[2])
+            while browser.current_url.split('/')[2] == 'cas.whu.edu.cn':
+                time.sleep(1)
+                pass
 
-        # print(browser.current_url.split('/')[2])
-        while browser.current_url.split('/')[2] == 'cas.whu.edu.cn':
-            time.sleep(1)
-            pass
-
-        cookies = browser.get_cookies()
-        print(cookies)
-        self.JSESSIONID, self.insert_cookie, self.iPlanetDirectoryPro = check_cookie(cookies)
-
+            cookies = browser.get_cookies()
+            # print(cookies)
+            self.JSESSIONID, self.insert_cookie, self.iPlanetDirectoryPro = check_cookie(cookies)
+            browser.close()
 
 
 # c = GetCookie()
